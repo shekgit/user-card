@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import CardData from './CardData.jsx'
 
 
@@ -12,6 +12,17 @@ const Card = () => {
     });
 
     const [allCards, setAllCards] = useState([]);
+
+    useEffect(() => {
+       const savedCards = localStorage.getItem("allCards");
+       if(savedCards){
+           setAllCards(JSON.parse(savedCards));
+       }
+    },[]);
+
+    useEffect(() => {
+        localStorage.setItem("allCards", JSON.stringify(allCards));
+    },[allCards]);
 
     const changeHandler = (e)=> {
         const { name, value } = e.target;
